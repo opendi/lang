@@ -1,0 +1,26 @@
+{
+    "name": "opendi/lang",
+    "type": "library",
+    "description": "PHP Language extensions",
+    "keywords": ["lang", "date"],
+    "homepage": "https://github.com/opendi/lang",
+    "authors": [
+        {
+            "name": "opendi AG",
+            "email": "info@opendi.com",
+            "homepage": "http://www.opendi.com/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Opendi": "src/"
+        }
+    }
+}
