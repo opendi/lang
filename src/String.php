@@ -98,4 +98,46 @@ class String
 
         return (mb_strlen($string) > $max) ? mb_strimwidth($string, 0, $max - 3, '...') : $string;
     }
+
+    /**
+     * Returns a slugified version of the string.
+     *
+     * Converts the given string into a string consisting only of lowecase
+     * ASCII characters and dashes (-). Used for constructing URLs.
+     *
+     * @param  string $string String to convert.
+     *
+     * @return string         Slugified string.
+     *
+     * @throws InvalidArgumentException If given argument is not a string or is
+     *         empty.
+     */
+    public static function slugify($string)
+    {
+        if (!is_string($string)) {
+            $type = gettype($string);
+            throw new \InvalidArgumentException("Given argument is a $type, expected string.");
+        }
+
+        if (empty($string)) {
+            throw new \InvalidArgumentException("Cannot slugify an empty string.");
+        }
+
+        // Replace non-alphanumeric characters by "-"
+        $string = preg_replace('/[^\\p{L}\\d]+/u', '-', $string);
+
+        // Trim
+        $string = trim($string, '-');
+
+        // Transliterate
+        $string = iconv('utf-8', 'ASCII//TRANSLIT', $string);
+
+        // Lowercase
+        $string = strtolower($string);
+
+        // Remove unwanted characters
+        $string = preg_replace('/[^-\w]+/', '', $string);
+
+        return $string;
+    }
 }

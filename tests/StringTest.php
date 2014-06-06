@@ -73,4 +73,30 @@ class StringTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('1234537890', String::plainPhone('123', '453-7890 '));
         $this->assertEquals('1234537890', String::plainPhone(' 123', ' 453-7890'));
     }
+
+    public function testSlugify()
+    {
+        $this->assertSame('aou-aou-umlauts', String::slugify('äöü ÄÖÜ Umlauts'));
+        $this->assertSame('multiple-weird-characters', String::slugify('  Multiple-/-\\-- Weird -{}- Characters !"#$%&/(()=??*'));
+        $this->assertSame('some-croatian-scczsccz', String::slugify('Some Croatian: ščćžŠČĆŽ'));
+        $this->assertSame('numbers-1234567890', String::slugify('Numbers: 1234567890'));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Given argument is a array, expected string.
+     */
+    public function testSlugifyNotString()
+    {
+        String::slugify([]);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Cannot slugify an empty string.
+     */
+    public function testSlugifyEmptyString()
+    {
+        String::slugify('');
+    }
 }
