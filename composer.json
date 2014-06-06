@@ -15,12 +15,14 @@
     "require": {
         "php": ">=5.4.0"
     },
-    "require-dev": {
-        "phpunit/phpunit": "3.7.*"
-    },
     "autoload": {
-        "psr-0": {
-            "Opendi": "src/"
+        "psr-4": {
+            "Opendi\\Lang\\": "src/"
+        }
+    },
+     "autoload-dev": {
+        "psr-4": {
+            "Opendi\\Lang\\Tests\\": "tests/"
         }
     }
 }

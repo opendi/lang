@@ -1,36 +1,43 @@
 <?php
 /**
- * 
+ *
  */
 
 namespace Opendi\Lang\Geo;
 
-class GeoCalculator {
+class GeoCalculator
+{
     private $longitude;
     private $latitude;
 
-    function __construct($latitude, $longitude) {
+    public function __construct($latitude, $longitude)
+    {
         $this->longitude = $longitude;
         $this->latitude = $latitude;
     }
 
-    public function latInt() {
+    public function latInt()
+    {
         return intval(round(($this->latitude * 1e6 ), 0));
     }
 
-    public function latSinRad() {
+    public function latSinRad()
+    {
         return sin(deg2rad($this->latitude));
     }
 
-    public function latCosRad() {
+    public function latCosRad()
+    {
         return cos(deg2rad($this->latitude));
     }
 
-    public function longInt() {
+    public function longInt()
+    {
         return intval(round(($this->longitude * 1e6), 0));
     }
 
-    public function longRad() {
+    public function longRad()
+    {
         return  deg2rad($this->longitude);
     }
 }

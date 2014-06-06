@@ -1,14 +1,14 @@
 <?php
 namespace Opendi\Lang;
 
-
-class String {
-
+class String
+{
     /**
      * @param string $needle
-     * @param array $wordPool
+     * @param array  $wordPool
      */
-    public static function mostSimilar($needle, $wordPool) {
+    public static function mostSimilar($needle, $wordPool)
+    {
         $distancePool = [];
 
         $needle = strtolower($needle);
@@ -29,7 +29,8 @@ class String {
         return $distancePool[$min][0];
     }
 
-    public static function plainPhone($area, $extension) {
+    public static function plainPhone($area, $extension)
+    {
         if ($area == null) {
             $area = "";
         }
@@ -44,6 +45,7 @@ class String {
         }
 
         $phoneNumber = str_replace('-', '', $phoneNumber);
+
         return str_replace(' ', '', $phoneNumber);
     }
 
@@ -57,7 +59,8 @@ class String {
      *
      * @param $digits
      */
-    public static function normalizePhone($digits) {
+    public static function normalizePhone($digits)
+    {
         $chunks = str_split($digits, 3);
 
         $result['npa']   = $chunks[0];
@@ -70,23 +73,29 @@ class String {
         return $result;
     }
 
-    public static function startsWith($haystack, $needle) {
+    public static function startsWith($haystack, $needle)
+    {
         return !strncmp($haystack, $needle, strlen($needle));
     }
 
-    public static function endsWith($haystack, $needle) {
+    public static function endsWith($haystack, $needle)
+    {
         return substr($haystack, -strlen($needle)) == $needle;
     }
 
-    public static function contains($haystack, $needle) {
+    public static function contains($haystack, $needle)
+    {
         if (strpos($haystack, $needle) !== false) {
             return true;
         }
+
         return false;
     }
 
-    public static function shorten($string, $max = 255) {
+    public static function shorten($string, $max = 255)
+    {
         $string = trim($string);
+
         return (mb_strlen($string) > $max) ? mb_strimwidth($string, 0, $max - 3, '...') : $string;
     }
-} 
+}

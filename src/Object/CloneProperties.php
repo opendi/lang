@@ -5,13 +5,15 @@
 
 namespace Opendi\Lang\Object;
 
-trait CloneProperties {
-
-    public static function fromJson($json) {
+trait CloneProperties
+{
+    public static function fromJson($json)
+    {
         return self::fromObject(json_decode($json));
     }
 
-    public static function fromArray($array) {
+    public static function fromArray($array)
+    {
         $keys = array_keys($array);
 
         $model = new self();
@@ -24,7 +26,8 @@ trait CloneProperties {
         return $model;
     }
 
-    public static function fromObject($object) {
+    public static function fromObject($object)
+    {
         $members = get_object_vars($object);
         $model = new self();
 
@@ -37,6 +40,7 @@ trait CloneProperties {
                 }
             }
         }
+
         return $model;
     }
-} 
+}
