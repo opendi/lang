@@ -1,9 +1,13 @@
 <?php
-namespace Opendi\Lang\Geo;
 
-class GeoCalculatorTest extends \PHPUnit_Framework_TestCase {
+namespace Opendi\Lang\Tests\Geo;
 
-    public function testCalcuations() {
+use Opendi\Lang\Geo\GeoCalculator;
+
+class GeoCalculatorTest extends \PHPUnit_Framework_TestCase
+{
+    public function testCalcuations()
+    {
         $calculator = new GeoCalculator(19.045148, -155.627424);
 
         $this->assertEquals(19045148, $calculator->latInt());
@@ -13,4 +17,3 @@ class GeoCalculatorTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(-2.71621095519724, $calculator->longRad());
     }
 }
- 
