@@ -99,6 +99,18 @@ class String
         return (mb_strlen($string) > $max) ? mb_strimwidth($string, 0, $max - 3, '...') : $string;
     }
 
+
+    private static $slugTranslations = [
+        // German
+        'ä' => 'ae',
+        'Ä' => 'ae',
+        'ö' => 'oe',
+        'Ö' => 'oe',
+        'ü' => 'ue',
+        'Ü' => 'ue',
+        'ß' => 'ss',
+    ];
+
     /**
      * Returns a slugified version of the string.
      *
@@ -122,6 +134,10 @@ class String
         if (empty($string)) {
             throw new \InvalidArgumentException("Cannot slugify an empty string.");
         }
+
+        // Replace some language-specific characters which are not handled by
+        // iconv transliteration satisfactorily.
+        $string = strtr($string, self::$slugTranslations);
 
         // Replace non-alphanumeric characters by "-"
         $string = preg_replace('/[^\\p{L}\\d]+/u', '-', $string);

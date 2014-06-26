@@ -76,7 +76,7 @@ class StringTest extends \PHPUnit_Framework_TestCase
 
     public function testSlugify()
     {
-        $this->assertSame('aou-aou-umlauts', String::slugify('äöü ÄÖÜ Umlauts'));
+        $this->assertSame('aeoeue-aeoeue-umlauts', String::slugify('äöü ÄÖÜ Umlauts'));
         $this->assertSame('multiple-weird-characters', String::slugify('  Multiple-/-\\-- Weird -{}- Characters !"#$%&/(()=??*'));
         $this->assertSame('some-croatian-scczsccz', String::slugify('Some Croatian: ščćžŠČĆŽ'));
         $this->assertSame('numbers-1234567890', String::slugify('Numbers: 1234567890'));
