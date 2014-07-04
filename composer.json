@@ -6,7 +6,7 @@
     "homepage": "https://github.com/opendi/lang",
     "authors": [
         {
-            "name": "opendi AG",
+            "name": "Opendi AG",
             "email": "info@opendi.com",
             "homepage": "http://www.opendi.com/",
             "role": "Developer"
@@ -22,7 +22,7 @@
     },
      "autoload-dev": {
         "psr-4": {
-            "Opendi\\Lang\\Tests\\": "tests/"
+            "Opendi\\Lang\\": "tests/"
         }
     }
 }
