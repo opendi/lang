@@ -48,7 +48,7 @@ class JsonTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException Exception
-     * @expectedExceptionMessage Failed decoding JSON: unexpected character
+     * @expectedExceptionMessage Failed decoding JSON
      */
     public function testDecodeError()
     {
@@ -94,7 +94,7 @@ class JsonTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException Exception
-     * @expectedExceptionMessage Inf and NaN cannot be JSON encoded
+     * @expectedExceptionMessage Failed encoding JSON
      */
     public function testEncodeError()
     {
