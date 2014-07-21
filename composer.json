@@ -22,7 +22,7 @@
     },
      "autoload-dev": {
         "psr-4": {
-            "Opendi\\Lang\\": "tests/"
+            "Opendi\\Lang\\Tests\\": "tests/"
         }
     }
 }
