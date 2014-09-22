@@ -553,20 +553,8 @@ class CharacterMap
         'ﬂ' => 'fl', // FB02
     ];
 
-    public function get()
+    public static function get()
     {
         return self::$map;
-    }
-
-    public static function getStartChar($string)
-    {
-        for ($i = 0; $i < mb_strelen($string); $i++) {
-            $char = mb_substr($string, $i, 1);
-            if (isset($this->map[$char])) {
-                return $this->map[$char][0];
-            }
-        }
-
-        return null;
     }
 }

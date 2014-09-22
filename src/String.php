@@ -127,7 +127,7 @@ class String
      *
      * @return string  The transliterated string.
      */
-    public function translit($string, $substChar = '?', $trim = true, $removeDuplicates = true)
+    public static function translit($string, $substChar = '?', $trim = true, $removeDuplicates = true)
     {
         if (!is_string($string)) {
             $type = gettype($string);
