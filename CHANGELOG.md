@@ -1,6 +1,12 @@
 Opendi Lang Changelog
 =====================
 
+0.3.3 (2014-09-25)
+------------------
+
+* Added `Json::load()` and `Json::dump()`
+* Added `String::translit()`
+
 0.3.2 (2014-07-21)
 ------------------
 
