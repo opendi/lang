@@ -101,4 +101,50 @@ class JsonTest extends \PHPUnit_Framework_TestCase
         // Unencodable stuff
         Json::encode(INF);
     }
+
+    public function testDumpAndLoad()
+    {
+        $filename = __DIR__ . '/../var/' . uniqid() . ".json";
+        $testData = $testData = [
+            'foo' => 1,
+            'bar' => false,
+            'baz' => 'string'
+        ];
+
+        $this->assertFalse(file_exists($filename));
+
+        Json::dump($testData, $filename);
+
+        $this->assertTrue(file_exists($filename));
+
+        $expected1 = $testData;
+        $expected2 = (object) $testData;
+
+        $actual1 = Json::load($filename, true);
+        $actual2 = Json::load($filename, false);
+
+        $this->assertEquals($expected1, $actual1);
+        $this->assertEquals($expected2, $actual2);
+
+        // Cleanup
+        unlink($filename);
+    }
+
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Failed reading JSON data from file
+     */
+    public function testLoadError()
+    {
+        @Json::load('this_file_does_not_exist.json');
+    }
+
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Failed writing JSON data to file
+     */
+    public function testDumpError()
+    {
+        @Json::dump("", __DIR__ . '/../var/does_not_exist/foo.json');
+    }
 }
