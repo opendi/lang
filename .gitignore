@@ -1,5 +1,4 @@
-composer.lock
-composer.phar
+/composer.lock
+/composer.phar
+/vendor
 php_errors.log
-vendor
-target

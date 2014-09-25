@@ -114,17 +114,42 @@ class String
         return (mb_strlen($string) > $max) ? mb_strimwidth($string, 0, $max - 3, '...') : $string;
     }
 
+    /**
+     * Transliterates an UTF8 string to printable ASCII characters.
+     *
+     * @param  string  $string    The string to transliterate.
+     * @param  string  $substChar The character to use for characters which
+     *                            cannot be transliterated.
+     * @param  boolean $trim      Whether to trim any subst characters from
+     *                            beginning and end of string.
+     * @param  boolean $removeDuplicates Whether to remove duplicate subst chars
+     *                                   with only one.
+     *
+     * @return string  The transliterated string.
+     */
+    public static function translit($string, $substChar = '?', $trim = true, $removeDuplicates = true)
+    {
+        if (!is_string($string)) {
+            $type = gettype($string);
+            throw new \InvalidArgumentException("Given argument is a $type, expected string.");
+        }
 
-    private static $slugTranslations = [
-        // German
-        'ä' => 'ae',
-        'Ä' => 'ae',
-        'ö' => 'oe',
-        'Ö' => 'oe',
-        'ü' => 'ue',
-        'Ü' => 'ue',
-        'ß' => 'ss',
-    ];
+        // Replace language-specific characters
+        $string = strtr($string, CharacterMap::get());
+
+        // Replace any leftover non-ASCII characters by the replacement char.
+        $string = preg_replace("/[^\\w]/", $substChar, $string);
+
+        if ($trim) {
+            $string = trim($string, $substChar);
+        }
+
+        if ($removeDuplicates) {
+            $string = preg_replace("/\\{$substChar}+/", $substChar, $string);
+        }
+
+        return $string;
+    }
 
     /**
      * Returns a slugified version of the string.
@@ -152,7 +177,7 @@ class String
 
         // Replace some language-specific characters which are not handled by
         // iconv transliteration satisfactorily.
-        $string = strtr($string, self::$slugTranslations);
+        $string = strtr($string, CharacterMap::get());
 
         // Replace non-alphanumeric characters by "-"
         $string = preg_replace('/[^\\p{L}\\d]+/u', '-', $string);

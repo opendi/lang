@@ -113,4 +113,22 @@ class StringTest extends \PHPUnit_Framework_TestCase
     {
         String::slugify('');
     }
+
+    public function testTranslit()
+    {
+        $this->assertSame('aeoeue?AeOeUe?Umlauts', String::translit('äöü ÄÖÜ Umlauts'));
+        $this->assertSame('aeoeue AeOeUe Umlauts', String::translit('äöü ÄÖÜ Umlauts', ' '));
+        $this->assertSame('aeoeueAeOeUeUmlauts', String::translit('äöü ÄÖÜ Umlauts', ''));
+
+        $string = '  Multiple-/-\\-- Weird -{}- Characters !"#$%&/(()=??*';
+
+        $this->assertSame('Multiple?Weird?Characters', String::translit($string, '?'));
+        $this->assertSame('Multiple?Weird?Characters', String::translit($string, '?', true, true));
+        $this->assertSame('Multiple???????Weird??????Characters', String::translit($string, '?', true, false));
+        $this->assertSame('?Multiple?Weird?Characters?', String::translit($string, '?', false, true));
+        $this->assertSame('??Multiple???????Weird??????Characters???????????????', String::translit($string, '?', false, false));
+
+        $this->assertSame('Some?Croatian?sccdzSCCDZ', String::translit('Some Croatian: ščćđžŠČĆĐŽ'));
+        $this->assertSame('Numbers?1234567890', String::translit('Numbers: 1234567890'));
+    }
 }
