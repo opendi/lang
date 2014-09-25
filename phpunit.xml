@@ -23,7 +23,7 @@
     </testsuites>
 
     <logging>
-        <log type="coverage-html" target="target/coverage" charset="UTF-8" />
+        <log type="coverage-html" target="var/coverage" charset="UTF-8" />
     </logging>
 
     <filter>
