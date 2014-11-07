@@ -6,7 +6,7 @@ Opendi Lang Changelog
 
 * Fixed CloneProperties trait to use late static binding which allows it to be
   used on a class and work on it's subclasses.
-
+* Improved tests
 
 0.3.3 (2014-09-25)
 ------------------
