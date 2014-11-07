@@ -25,12 +25,11 @@ trait CloneProperties
 
     public static function fromArray($array)
     {
-        $keys = array_keys($array);
-
         $model = new static();
-        foreach ($keys as $key) {
+
+        foreach ($array as $key => $value) {
             if (property_exists($model, $key)) {
-                $model->$key = $array[$key];
+                $model->$key = $value;
             }
         }
 
@@ -39,16 +38,13 @@ trait CloneProperties
 
     public static function fromObject($object)
     {
-        $members = get_object_vars($object);
         $model = new static();
 
-        foreach ($members as $name => $value) {
-            $type = gettype($value);
-
-            if ($type == 'string' || $type == 'integer' || $type == 'double' || $type == 'boolean') {
-                if (property_exists($model, $name)) {
-                    $model->$name = $value;
-                }
+        $members = get_object_vars($object);
+        foreach ($members as $key => $value) {
+            // TODO: determine if is_scalar is required here
+            if (is_scalar($value) && property_exists($model, $key)) {
+                $model->$key = $value;
             }
         }
 
