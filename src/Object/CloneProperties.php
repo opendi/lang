@@ -20,14 +20,14 @@ trait CloneProperties
 {
     public static function fromJson($json)
     {
-        return self::fromObject(json_decode($json));
+        return static::fromObject(json_decode($json));
     }
 
     public static function fromArray($array)
     {
         $keys = array_keys($array);
 
-        $model = new self();
+        $model = new static();
         foreach ($keys as $key) {
             if (property_exists($model, $key)) {
                 $model->$key = $array[$key];
@@ -40,7 +40,7 @@ trait CloneProperties
     public static function fromObject($object)
     {
         $members = get_object_vars($object);
-        $model = new self();
+        $model = new static();
 
         foreach ($members as $name => $value) {
             $type = gettype($value);
