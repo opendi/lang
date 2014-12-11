@@ -129,9 +129,14 @@ class String
      */
     public static function translit($string, $substChar = '?', $trim = true, $removeDuplicates = true)
     {
+        // Cast scalars to strings, if non-scalar is given throw an exception
         if (!is_string($string)) {
-            $type = gettype($string);
-            throw new \InvalidArgumentException("Given argument is a $type, expected string.");
+            if (is_scalar($string)) {
+                $string = (string) $string;
+            } else {
+                $type = gettype($string);
+                throw new \InvalidArgumentException("String::translit() expects parameter 1 to be string, $type given");
+            }
         }
 
         // Replace language-specific characters
