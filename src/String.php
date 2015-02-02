@@ -19,6 +19,9 @@ namespace Opendi\Lang;
 class String
 {
     /**
+     * Finds a string in a pool of strings which is most similar to the given
+     * needle.
+     *
      * @param string $needle
      * @param array  $wordPool
      */
@@ -26,10 +29,10 @@ class String
     {
         $distancePool = [];
 
-        $needle = strtolower($needle);
+        $needle = mb_strtolower($needle);
 
         foreach ($wordPool as $word) {
-            $distance = levenshtein($needle, strtolower($word));
+            $distance = similar_text($needle, mb_strtolower($word));
 
             if (!isset($distancePool[$distance])) {
                 $distancePool[$distance] = [];
@@ -38,7 +41,7 @@ class String
             $distancePool[$distance][] = $word;
         }
 
-        $min = min(array_keys($distancePool));
+        $min = max(array_keys($distancePool));
 
         // if distance is the same, we just pick the first we can get
         return $distancePool[$min][0];
