@@ -1,6 +1,14 @@
 Opendi Lang Changelog
 =====================
 
+0.3.5 (2015-02-02)
+------------------
+
+* Added `String::oneLiner()`
+* Modified `String::mostSimilar()` to use `similar_text()` instead of
+  `levenshtein()`
+* Modified `String::translit()` to accept non-string scalars
+
 0.3.4 (2014-11-07)
 ------------------
 
