@@ -130,5 +130,19 @@ class StringTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('Some?Croatian?sccdzSCCDZ', String::translit('Some Croatian: ščćđžŠČĆĐŽ'));
         $this->assertSame('Numbers?1234567890', String::translit('Numbers: 1234567890'));
+
+        // Should work on scalars too
+        $this->assertSame('1234567890', String::translit(1234567890)); // integer
+        $this->assertSame('12345?6789', String::translit(12345.67890)); // float
+        $this->assertSame('1', String::translit(true)); // boolean
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage String::translit() expects parameter 1 to be string, array given
+     */
+    public function testTranslitException()
+    {
+        String::translit([]);
     }
 }
