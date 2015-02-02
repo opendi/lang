@@ -204,4 +204,15 @@ class String
 
         return $string;
     }
+
+    /**
+     * Removes line breaks and recurring whitespace from a string.
+     *
+     * @param  string $string
+     * @return string
+     */
+    public static function oneLiner($string)
+    {
+        return preg_replace('/\\s+/', ' ', $string);
+    }
 }
