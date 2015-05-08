@@ -124,7 +124,11 @@ class JsonWriter
         if (isset($ord)) {
             $parts = pathinfo($path);
             $ord = str_pad($ord, 5, '0', STR_PAD_LEFT);
-            $path = "{$parts['dirname']}/{$parts['filename']}.$ord.{$parts['extension']}";
+            $path = "{$parts['dirname']}/{$parts['filename']}.$ord";
+
+            if (isset($parts['extension'])) {
+                $path .= "." . $parts['extension'];
+            }
         }
 
         $info = new SplFileInfo($path);
