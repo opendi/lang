@@ -36,15 +36,37 @@ trait CloneProperties
         return $model;
     }
 
-    public static function fromObject($object)
+    public static function fromObject($object, $before = null)
     {
         $model = new static();
+
+        /**
+         * In some cases the model needs to be manipulated before
+         * any properties are set. Example: Yext ECL models.
+         */
+        if (is_callable($before)) {
+            $before($model);
+        }
 
         $members = get_object_vars($object);
         foreach ($members as $key => $value) {
             // TODO: determine if is_scalar is required here
             if (is_scalar($value) && property_exists($model, $key)) {
                 $model->$key = $value;
+            } else {
+                /**
+                 * Some objects don't provide public access to properties.
+                 * If we can't find the property, we try to find a setter method instead.
+                 *
+                 * Methods need to follow the usual setValue schema.
+                 *
+                 * @var $name string name of the property
+                 * @var $value string the value to set
+                 */
+                $setter = 'set' . ucfirst($key);
+                if (method_exists($model, $setter)) {
+                    $model->{$setter}($value);
+                }
             }
         }
 
