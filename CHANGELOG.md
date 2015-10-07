@@ -1,6 +1,12 @@
 Opendi Lang Changelog
 =====================
 
+
+0.3.7 (2015-05-08)
+------------------
+
+* Add: support for setters and before closure in the CloneProperties trait
+
 0.3.6 (2015-05-08)
 ------------------
 
