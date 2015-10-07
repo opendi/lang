@@ -16,6 +16,14 @@ class CPUserChild extends CPUser
     public $bar;
 }
 
+class CPManipulate
+{
+    use CloneProperties;
+
+    public $foo;
+    public $bar;
+}
+
 class ClonePropertiesTest extends \PHPUnit_Framework_TestCase
 {
     public function testFromArray()
@@ -52,6 +60,20 @@ class ClonePropertiesTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(CPUser::class, $user);
         $this->assertEquals($object->foo, $user->foo);
+    }
+
+    public function testFromObjectWithBefore()
+    {
+        $object = new \stdClass();
+        $object->foo = 123;
+
+        $user = CPManipulate::fromObject($object, function($model) {
+            $model->bar = 'bar';
+        });
+
+        $this->assertInstanceOf(CPManipulate::class, $user);
+        $this->assertEquals($object->foo, $user->foo);
+        $this->assertEquals($user->bar, 'bar');
     }
 
     public function testFromObjectChild()
