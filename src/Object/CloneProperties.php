@@ -36,6 +36,17 @@ trait CloneProperties
         return $model;
     }
 
+    /**
+     * This method guarantees to first set scalar values and public properties,
+     * then to set complex objects using set-methods.
+     *
+     * set-methods may need additional information which is only set
+     * when using the right order.
+     *
+     * @param $object
+     * @param null $before
+     * @return static
+     */
     public static function fromObject($object, $before = null)
     {
         $model = new static();
@@ -48,25 +59,31 @@ trait CloneProperties
             $before($model);
         }
 
+        $backlog = [];
         $members = get_object_vars($object);
         foreach ($members as $key => $value) {
             // TODO: determine if is_scalar is required here
             if (is_scalar($value) && property_exists($model, $key)) {
                 $model->$key = $value;
             } else {
-                /**
-                 * Some objects don't provide public access to properties.
-                 * If we can't find the property, we try to find a setter method instead.
-                 *
-                 * Methods need to follow the usual setValue schema.
-                 *
-                 * @var $name string name of the property
-                 * @var $value string the value to set
-                 */
-                $setter = 'set' . ucfirst($key);
-                if (method_exists($model, $setter)) {
-                    $model->{$setter}($value);
-                }
+                // First set all properties, then set methods
+                $backlog[$key] = $value;
+            }
+        }
+
+        foreach ($backlog as $key => $value) {
+            /**
+             * Some objects don't provide public access to properties.
+             * If we can't find the property, we try to find a setter method instead.
+             *
+             * Methods need to follow the usual setValue schema.
+             *
+             * @var $key string name of the property
+             * @var $value string the value to set
+             */
+            $setter = 'set' . ucfirst($key);
+            if (method_exists($model, $setter)) {
+                $model->{$setter}($value);
             }
         }
 
