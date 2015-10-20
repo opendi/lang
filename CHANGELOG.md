@@ -1,6 +1,10 @@
 Opendi Lang Changelog
 =====================
 
+0.3.8 (2015-05-20)
+------------------
+
+* Add: guarantee set order in CloneProperties (props first, then setters)
 
 0.3.7 (2015-05-08)
 ------------------
