@@ -215,4 +215,29 @@ class String
     {
         return preg_replace('/\\s+/', ' ', $string);
     }
+
+    /**
+     * Replaces all 4-byte unicode characters (characters outside the Basic
+     * Multilingual Plane) with the replacement character (0xFFFD).
+     *
+     * @see https://en.wikipedia.org/wiki/Plane_(Unicode)
+     * @see http://unicode.org/reports/tr36/#Deletion_of_Noncharacters
+     * @see http://www.fileformat.info/info/unicode/char/fffd/index.htm
+     *
+     * @param  string $string      Input string.
+     * @param  string $replacement Replacement character.
+     *
+     * @return string Input string with replaced 4-byte characters.
+     */
+    public static function replaceNonBmp($string, $replacement = "\xEF\xBF\xBD")
+    {
+        $replaced = preg_replace('/[\\x{10000}-\\x{10FFFF}]/u', $replacement, $string);
+
+        $error = preg_last_error();
+        if ($error !== PREG_NO_ERROR) {
+            throw new \Exception("Failed replacing non-BMP characters from string. Error code: $error");
+        }
+
+        return $replaced;
+    }
 }
