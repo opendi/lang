@@ -145,4 +145,22 @@ class StringTest extends \PHPUnit_Framework_TestCase
     {
         String::translit([]);
     }
+
+    public function testReplaceNonBmp()
+    {
+        $text = "Here is a smiley face: \xF0\x9F\x98\x8A";
+        $expected = "Here is a smiley face: \xEF\xBF\xBD";
+        $actual = String::replaceNonBmp($text);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @expectedException Exception
+     * @expectedExceptionMessage Failed replacing non-BMP characters from string. Error code: 4
+     */
+    public function testReplaceNonBmpError()
+    {
+        $text = "Here is an invalid unicode sequence: \xF0\x28\x8C\xBC";
+        String::replaceNonBmp($text);
+    }
 }
