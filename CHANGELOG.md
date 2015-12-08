@@ -1,6 +1,14 @@
 Opendi Lang Changelog
 =====================
 
+1.0.0 (2015-12-08)
+------------------
+
+BC Breaks:
+
+* Rename class `String` to `StringUtils` since `String` is reserved in PHP 7
+* Rename class `Arry` to `ArrayUtils` to keep naming consistent
+
 0.3.9 (2015-11-27)
 ------------------
 
