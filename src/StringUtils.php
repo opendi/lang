@@ -16,7 +16,7 @@
  */
 namespace Opendi\Lang;
 
-class String
+class StringUtils
 {
     /**
      * Finds a string in a pool of strings which is most similar to the given
@@ -138,7 +138,7 @@ class String
                 $string = (string) $string;
             } else {
                 $type = gettype($string);
-                throw new \InvalidArgumentException("String::translit() expects parameter 1 to be string, $type given");
+                throw new \InvalidArgumentException(__METHOD__ . "() expects parameter 1 to be string, $type given");
             }
         }
 

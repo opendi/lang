@@ -23,7 +23,7 @@ use InvalidArgumentException;
 /**
  * Helper class for encoding and decoding JSON.
  */
-class Arry
+class ArrayUtils
 {
     /**
      * Flattens a deep array to a single dimension.
