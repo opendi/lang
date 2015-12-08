@@ -16,10 +16,10 @@
  */
 namespace Opendi\Lang\Tests;
 
-use Opendi\Lang\Arry;
+use Opendi\Lang\ArrayUtils;
 use DateTime;
 
-class ArryTest extends \PHPUnit_Framework_TestCase
+class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
 {
     private $array1 = [
         [
@@ -160,14 +160,14 @@ class ArryTest extends \PHPUnit_Framework_TestCase
             'oof' => 1,
         ];
 
-        $actual = Arry::flatten($array);
+        $actual = ArrayUtils::flatten($array);
         $this->assertSame($expected, $actual);
     }
 
     public function testReIndex1()
     {
         $path = ['secBoardId', 'secCode'];
-        $actual = Arry::reindex($this->array1, $path);
+        $actual = ArrayUtils::reindex($this->array1, $path);
         $this->assertEquals($this->expected1, $actual);
     }
 
@@ -177,7 +177,7 @@ class ArryTest extends \PHPUnit_Framework_TestCase
             ['secBoardId', 'boardId'],
             ['secBoardId', 'secCode'],
         ];
-        $actual = Arry::reindex($this->array1, $path);
+        $actual = ArrayUtils::reindex($this->array1, $path);
         $this->assertEquals($this->expected2, $actual);
     }
 
@@ -190,7 +190,7 @@ class ArryTest extends \PHPUnit_Framework_TestCase
             ['secBoardId', 'boardId'],
             ['secBoardId', 'secCode'],
         ];
-        $actual = Arry::reindex($this->array2, $path);
+        $actual = ArrayUtils::reindex($this->array2, $path);
     }
 
     public function testReIndex4()
@@ -199,7 +199,7 @@ class ArryTest extends \PHPUnit_Framework_TestCase
             ['secBoardId', 'boardId'],
             ['secBoardId', 'secCode'],
         ];
-        $actual = Arry::reindex($this->array2, $path, true);
+        $actual = ArrayUtils::reindex($this->array2, $path, true);
 
         $this->assertEquals($this->expected3, $actual);
     }
@@ -216,7 +216,7 @@ class ArryTest extends \PHPUnit_Framework_TestCase
             'z' => ['bla' => 'z', 'tra' => 'w'],
         ];
 
-        $actual = Arry::reindex($array, 'bla');
+        $actual = ArrayUtils::reindex($array, 'bla');
         $this->assertEquals($expected, $actual);
     }
 
@@ -226,7 +226,7 @@ class ArryTest extends \PHPUnit_Framework_TestCase
     public function testReIndexFail1()
     {
         $x = new DateTime();
-        Arry::reindex([], $x);
+        ArrayUtils::reindex([], $x);
     }
 
     /**
@@ -235,7 +235,7 @@ class ArryTest extends \PHPUnit_Framework_TestCase
     public function testReIndexFail2()
     {
         $x = [new DateTime()];
-        Arry::reindex([], $x);
+        ArrayUtils::reindex([], $x);
     }
 
     /**
@@ -244,7 +244,7 @@ class ArryTest extends \PHPUnit_Framework_TestCase
     public function testReIndexFail3()
     {
         $x = [new DateTime()];
-        Arry::reindex([], $x);
+        ArrayUtils::reindex([], $x);
     }
 
     /**
@@ -253,7 +253,7 @@ class ArryTest extends \PHPUnit_Framework_TestCase
     public function testReIndexFail4()
     {
         $x = [[]];
-        Arry::reindex([], $x);
+        ArrayUtils::reindex([], $x);
     }
 
 }
