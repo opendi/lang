@@ -51,6 +51,20 @@ class ClonePropertiesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($array, (array) $user);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFromArrayException()
+    {
+        CPUser::fromArray(null);
+    }
+
+    public function testFromArrayEmpty()
+    {
+        $user = CPUser::fromArray([]);
+        $this->assertInstanceOf(CPUser::class, $user);
+    }
+
     public function testFromObject()
     {
         $object = new \stdClass();
@@ -87,5 +101,19 @@ class ClonePropertiesTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(CPUserChild::class, $user);
         $this->assertEquals($object->foo, $user->foo);
         $this->assertEquals($object->bar, $user->bar);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFromObjectException()
+    {
+        CPUser::fromObject([]);
+    }
+
+    public function testFromObjectEmpty()
+    {
+        $user = CPUser::fromObject(new \stdClass());
+        $this->assertInstanceOf(CPUser::class, $user);
     }
 }
