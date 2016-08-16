@@ -16,6 +16,9 @@
  */
 namespace Opendi\Lang\Object;
 
+use Closure;
+use InvalidArgumentException;
+
 trait CloneProperties
 {
     public static function fromJson($json)
@@ -23,8 +26,20 @@ trait CloneProperties
         return static::fromObject(json_decode($json));
     }
 
+    /**
+     * Returns a new object with properties set from
+     * matching array keys
+     *
+     * @param $array
+     * @throws InvalidArgumentException
+     * @return static
+     */
     public static function fromArray($array)
     {
+        if (!is_array($array)) {
+            throw new InvalidArgumentException("Expected array, got " . gettype($array));
+        }
+
         $model = new static();
 
         foreach ($array as $key => $value) {
@@ -44,11 +59,16 @@ trait CloneProperties
      * when using the right order.
      *
      * @param $object
-     * @param null $before
+     * @param Closure $before
+     * @throws InvalidArgumentException
      * @return static
      */
     public static function fromObject($object, $before = null)
     {
+        if (!is_object($object)) {
+            throw new InvalidArgumentException("Expected object, got " . gettype($object));
+        }
+
         $model = new static();
 
         /**
