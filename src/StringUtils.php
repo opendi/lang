@@ -194,7 +194,7 @@ class StringUtils
         $string = trim($string, '-');
 
         // Transliterate
-        $string = iconv('utf-8', 'ASCII//TRANSLIT', $string);
+        $string = iconv('utf-8', 'ASCII', $string);
 
         // Lowercase
         $string = strtolower($string);
