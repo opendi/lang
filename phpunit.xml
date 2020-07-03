@@ -22,9 +22,10 @@
         </testsuite>
     </testsuites>
 
-    <logging>
+    <!--<logging>
         <log type="coverage-html" target="var/coverage" charset="UTF-8" />
     </logging>
+    -->
 
     <filter>
         <whitelist>
