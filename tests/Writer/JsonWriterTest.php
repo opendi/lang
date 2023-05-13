@@ -14,11 +14,12 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
-namespace Opendi\Lang\Tests;
+namespace Opendi\Lang\Tests\Writer;
 
 use Opendi\Lang\Writer\JsonWriter;
+use PHPUnit\Framework\TestCase;
 
-class JsonWriterTest extends \PHPUnit_Framework_TestCase
+class JsonWriterTest extends TestCase
 {
     private $testData = [
         'foo' => ['bar1' => 'baz1'],

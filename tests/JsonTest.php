@@ -16,9 +16,11 @@
  */
 namespace Opendi\Lang\Tests;
 
+use Exception;
 use Opendi\Lang\Json;
+use PHPUnit\Framework\TestCase;
 
-class JsonTest extends \PHPUnit_Framework_TestCase
+class JsonTest extends TestCase
 {
     public function testDecode()
     {
@@ -46,12 +48,10 @@ class JsonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @expectedException Exception
-     * @expectedExceptionMessage Failed decoding JSON
-     */
     public function testDecodeError()
     {
+        $this->expectExceptionMessage("Failed decoding JSON");
+        $this->expectException(Exception::class);
         // Invalid JSON
         Json::decode('xxx');
     }
@@ -92,12 +92,10 @@ class JsonTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @expectedException Exception
-     * @expectedExceptionMessage Failed encoding JSON
-     */
     public function testEncodeError()
     {
+        $this->expectExceptionMessage("Failed encoding JSON");
+        $this->expectException(Exception::class);
         // Unencodable stuff
         Json::encode(INF);
     }
@@ -130,21 +128,17 @@ class JsonTest extends \PHPUnit_Framework_TestCase
         unlink($filename);
     }
 
-    /**
-     * @expectedException Exception
-     * @expectedExceptionMessage Failed reading JSON data from file
-     */
     public function testLoadError()
     {
+        $this->expectExceptionMessage("Failed reading JSON data from file");
+        $this->expectException(Exception::class);
         @Json::load('this_file_does_not_exist.json');
     }
 
-    /**
-     * @expectedException Exception
-     * @expectedExceptionMessage Failed writing JSON data to file
-     */
     public function testDumpError()
     {
+        $this->expectExceptionMessage("Failed writing JSON data to file");
+        $this->expectException(Exception::class);
         @Json::dump("", __DIR__ . '/../var/does_not_exist/foo.json');
     }
 }

@@ -16,9 +16,12 @@
  */
 namespace Opendi\Lang\Tests;
 
+use Exception;
+use InvalidArgumentException;
 use Opendi\Lang\StringUtils;
+use PHPUnit\Framework\TestCase;
 
-class StringUtilsTest extends \PHPUnit_Framework_TestCase
+class StringUtilsTest extends TestCase
 {
     public function testMostSimilar()
     {
@@ -96,21 +99,17 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('numbers-1234567890', StringUtils::slugify('Numbers: 1234567890'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Given argument is a array, expected string.
-     */
     public function testSlugifyNotString()
     {
+        $this->expectExceptionMessage("Given argument is a array, expected string.");
+        $this->expectException(InvalidArgumentException::class);
         StringUtils::slugify([]);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Cannot slugify an empty string.
-     */
     public function testSlugifyEmptyString()
     {
+        $this->expectExceptionMessage("Cannot slugify an empty string.");
+        $this->expectException(InvalidArgumentException::class);
         StringUtils::slugify('');
     }
 
@@ -137,12 +136,10 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('1', StringUtils::translit(true)); // boolean
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage StringUtils::translit() expects parameter 1 to be string, array given
-     */
     public function testTranslitException()
     {
+        $this->expectExceptionMessage("StringUtils::translit() expects parameter 1 to be string, array given");
+        $this->expectException(InvalidArgumentException::class);
         StringUtils::translit([]);
     }
 
@@ -154,12 +151,10 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @expectedException Exception
-     * @expectedExceptionMessage Failed replacing non-BMP characters from string. Error code: 4
-     */
     public function testReplaceNonBmpError()
     {
+        $this->expectExceptionMessage("Failed replacing non-BMP characters from string. Error code: 4");
+        $this->expectException(Exception::class);
         $text = "Here is an invalid unicode sequence: \xF0\x28\x8C\xBC";
         StringUtils::replaceNonBmp($text);
     }

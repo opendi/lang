@@ -3,6 +3,7 @@
 namespace Opendi\Lang\Tests\Object;
 
 use Opendi\Lang\Object\CloneProperties;
+use PHPUnit\Framework\TestCase;
 
 class CPUser
 {
@@ -24,7 +25,7 @@ class CPManipulate
     public $bar;
 }
 
-class ClonePropertiesTest extends \PHPUnit_Framework_TestCase
+class ClonePropertiesTest extends TestCase
 {
     public function testFromArray()
     {
@@ -51,11 +52,9 @@ class ClonePropertiesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($array, (array) $user);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testFromArrayException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         CPUser::fromArray(null);
     }
 
@@ -103,11 +102,9 @@ class ClonePropertiesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($object->bar, $user->bar);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testFromObjectException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         CPUser::fromObject([]);
     }
 

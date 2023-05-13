@@ -16,10 +16,13 @@
  */
 namespace Opendi\Lang\Tests;
 
+use Exception;
+use InvalidArgumentException;
 use Opendi\Lang\ArrayUtils;
 use DateTime;
+use PHPUnit\Framework\TestCase;
 
-class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
+class ArrayUtilsTest extends TestCase
 {
     private $array1 = [
         [
@@ -181,11 +184,9 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->expected2, $actual);
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testReIndex3()
     {
+        $this->expectException(Exception::class);
         $path = [
             ['secBoardId', 'boardId'],
             ['secBoardId', 'secCode'],
@@ -220,38 +221,30 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testReIndexFail1()
     {
+        $this->expectException(InvalidArgumentException::class);
         $x = new DateTime();
         ArrayUtils::reindex([], $x);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testReIndexFail2()
     {
+        $this->expectException(InvalidArgumentException::class);
         $x = [new DateTime()];
         ArrayUtils::reindex([], $x);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testReIndexFail3()
     {
+        $this->expectException(InvalidArgumentException::class);
         $x = [new DateTime()];
         ArrayUtils::reindex([], $x);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testReIndexFail4()
     {
+        $this->expectException(InvalidArgumentException::class);
         $x = [[]];
         ArrayUtils::reindex([], $x);
     }

@@ -17,8 +17,9 @@
 namespace Opendi\Lang\Tests\Geo;
 
 use Opendi\Lang\Geo\GeoCalculator;
+use PHPUnit\Framework\TestCase;
 
-class GeoCalculatorTest extends \PHPUnit_Framework_TestCase
+class GeoCalculatorTest extends TestCase
 {
     public function testCalcuations()
     {
@@ -26,8 +27,8 @@ class GeoCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(19045148, $calculator->latInt());
         $this->assertEquals(-155627424, $calculator->longInt());
-        $this->assertEquals(0.326313104214826, $calculator->latSinRad());
-        $this->assertEquals(0.945261740481272, $calculator->latCosRad());
-        $this->assertEquals(-2.71621095519724, $calculator->longRad());
+        $this->assertEquals(0.3263131042148255, $calculator->latSinRad());
+        $this->assertEquals(0.9452617404812724, $calculator->latCosRad());
+        $this->assertEquals(-2.7162109551972433, $calculator->longRad());
     }
 }
