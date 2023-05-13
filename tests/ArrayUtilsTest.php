@@ -14,6 +14,7 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
+
 namespace Opendi\Lang\Tests;
 
 use Exception;
@@ -30,7 +31,11 @@ class ArrayUtilsTest extends TestCase
                 'secCode' => 'HT-R-A',
                 'boardId' => 'EQTY'
             ],
-            'statics' => ['bla', 'tra', 'mrmot']
+            'statics' => [
+                'bla',
+                'tra',
+                'mrmot'
+            ]
         ],
 
         [
@@ -38,7 +43,11 @@ class ArrayUtilsTest extends TestCase
                 'secCode' => 'DLKV-R-A',
                 'boardId' => 'EQTY'
             ],
-            'statics' => ['bla', 'tra', 'mrmot']
+            'statics' => [
+                'bla',
+                'tra',
+                'mrmot'
+            ]
         ],
 
         [
@@ -46,7 +55,11 @@ class ArrayUtilsTest extends TestCase
                 'secCode' => 'FNOI-D-125A',
                 'boardId' => 'FINC'
             ],
-            'statics' => ['bla', 'tra', 'mrmot']
+            'statics' => [
+                'bla',
+                'tra',
+                'mrmot'
+            ]
         ]
     ];
 
@@ -56,7 +69,11 @@ class ArrayUtilsTest extends TestCase
                 'secCode' => 'HT-R-A',
                 'boardId' => 'EQTY'
             ],
-            'statics' => ['bla', 'tra', 'mrmot']
+            'statics' => [
+                'bla',
+                'tra',
+                'mrmot'
+            ]
         ],
 
         [
@@ -64,7 +81,11 @@ class ArrayUtilsTest extends TestCase
                 'secCode' => 'HT-R-A',
                 'boardId' => 'EQTY'
             ],
-            'statics' => ['bla1', 'tra1', 'mrmot1']
+            'statics' => [
+                'bla1',
+                'tra1',
+                'mrmot1'
+            ]
         ],
 
         [
@@ -72,7 +93,11 @@ class ArrayUtilsTest extends TestCase
                 'secCode' => 'HT-R-A',
                 'boardId' => 'EQTY'
             ],
-            'statics' => ['bla2', 'tra2', 'mrmot2']
+            'statics' => [
+                'bla2',
+                'tra2',
+                'mrmot2'
+            ]
         ],
     ];
 
@@ -83,21 +108,33 @@ class ArrayUtilsTest extends TestCase
                 'secCode' => 'HT-R-A',
                 'boardId' => 'EQTY'
             ],
-            'statics' => ['bla', 'tra', 'mrmot']
+            'statics' => [
+                'bla',
+                'tra',
+                'mrmot'
+            ]
         ],
         'DLKV-R-A' => [
             'secBoardId' => [
                 'secCode' => 'DLKV-R-A',
                 'boardId' => 'EQTY'
             ],
-            'statics' => ['bla', 'tra', 'mrmot']
+            'statics' => [
+                'bla',
+                'tra',
+                'mrmot'
+            ]
         ],
         'FNOI-D-125A' => [
             'secBoardId' => [
                 'secCode' => 'FNOI-D-125A',
                 'boardId' => 'FINC'
             ],
-            'statics' => ['bla', 'tra', 'mrmot']
+            'statics' => [
+                'bla',
+                'tra',
+                'mrmot'
+            ]
         ]
     ];
 
@@ -109,14 +146,22 @@ class ArrayUtilsTest extends TestCase
                     'secCode' => 'HT-R-A',
                     'boardId' => 'EQTY'
                 ],
-                'statics' => ['bla', 'tra', 'mrmot']
+                'statics' => [
+                    'bla',
+                    'tra',
+                    'mrmot'
+                ]
             ],
             'DLKV-R-A' => [
                 'secBoardId' => [
                     'secCode' => 'DLKV-R-A',
                     'boardId' => 'EQTY'
                 ],
-                'statics' => ['bla', 'tra', 'mrmot']
+                'statics' => [
+                    'bla',
+                    'tra',
+                    'mrmot'
+                ]
             ],
         ],
         'FINC' => [
@@ -125,7 +170,11 @@ class ArrayUtilsTest extends TestCase
                     'secCode' => 'FNOI-D-125A',
                     'boardId' => 'FINC'
                 ],
-                'statics' => ['bla', 'tra', 'mrmot']
+                'statics' => [
+                    'bla',
+                    'tra',
+                    'mrmot'
+                ]
             ]
         ]
     ];
@@ -138,13 +187,16 @@ class ArrayUtilsTest extends TestCase
                     'secCode' => 'HT-R-A',
                     'boardId' => 'EQTY'
                 ],
-                'statics' => ['bla2', 'tra2', 'mrmot2']
+                'statics' => [
+                    'bla2',
+                    'tra2',
+                    'mrmot2'
+                ]
             ]
         ]
     ];
 
-    public function testFlatten()
-    {
+    public function testFlatten() {
         $array = [
             'foo' => [
                 'bar' => [
@@ -167,83 +219,107 @@ class ArrayUtilsTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testReIndex1()
-    {
-        $path = ['secBoardId', 'secCode'];
+    public function testReIndex1() {
+        $path = [
+            'secBoardId',
+            'secCode'
+        ];
         $actual = ArrayUtils::reindex($this->array1, $path);
         $this->assertEquals($this->expected1, $actual);
     }
 
-    public function testReIndex2()
-    {
+    public function testReIndex2() {
         $path = [
-            ['secBoardId', 'boardId'],
-            ['secBoardId', 'secCode'],
+            [
+                'secBoardId',
+                'boardId'
+            ],
+            [
+                'secBoardId',
+                'secCode'
+            ],
         ];
         $actual = ArrayUtils::reindex($this->array1, $path);
         $this->assertEquals($this->expected2, $actual);
     }
 
-    public function testReIndex3()
-    {
+    public function testReIndex3() {
         $this->expectException(Exception::class);
         $path = [
-            ['secBoardId', 'boardId'],
-            ['secBoardId', 'secCode'],
+            [
+                'secBoardId',
+                'boardId'
+            ],
+            [
+                'secBoardId',
+                'secCode'
+            ],
         ];
         $actual = ArrayUtils::reindex($this->array2, $path);
     }
 
-    public function testReIndex4()
-    {
+    public function testReIndex4() {
         $path = [
-            ['secBoardId', 'boardId'],
-            ['secBoardId', 'secCode'],
+            [
+                'secBoardId',
+                'boardId'
+            ],
+            [
+                'secBoardId',
+                'secCode'
+            ],
         ];
         $actual = ArrayUtils::reindex($this->array2, $path, true);
 
         $this->assertEquals($this->expected3, $actual);
     }
 
-    public function testReIndex5()
-    {
+    public function testReIndex5() {
         $array = [
-            ['bla' => 'x', 'tra' => 'y'],
-            ['bla' => 'z', 'tra' => 'w'],
+            [
+                'bla' => 'x',
+                'tra' => 'y'
+            ],
+            [
+                'bla' => 'z',
+                'tra' => 'w'
+            ],
         ];
 
         $expected = [
-            'x' => ['bla' => 'x', 'tra' => 'y'],
-            'z' => ['bla' => 'z', 'tra' => 'w'],
+            'x' => [
+                'bla' => 'x',
+                'tra' => 'y'
+            ],
+            'z' => [
+                'bla' => 'z',
+                'tra' => 'w'
+            ],
         ];
 
         $actual = ArrayUtils::reindex($array, 'bla');
         $this->assertEquals($expected, $actual);
     }
 
-    public function testReIndexFail1()
-    {
+    public function testReIndexFail1() {
         $this->expectException(InvalidArgumentException::class);
         $x = new DateTime();
         ArrayUtils::reindex([], $x);
     }
 
-    public function testReIndexFail2()
-    {
+    public function testReIndexFail2() {
         $this->expectException(InvalidArgumentException::class);
         $x = [new DateTime()];
         ArrayUtils::reindex([], $x);
     }
 
-    public function testReIndexFail3()
-    {
+    public function testReIndexFail3() {
         $this->expectException(InvalidArgumentException::class);
         $x = [new DateTime()];
         ArrayUtils::reindex([], $x);
     }
 
-    public function testReIndexFail4()
-    {
+    public function testReIndexFail4() {
         $this->expectException(InvalidArgumentException::class);
         $x = [[]];
         ArrayUtils::reindex([], $x);

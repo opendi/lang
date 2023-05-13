@@ -14,7 +14,10 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
+
 namespace Opendi\Lang;
+
+use InvalidArgumentException;
 
 class StringUtils
 {
@@ -23,10 +26,9 @@ class StringUtils
      * needle.
      *
      * @param string $needle
-     * @param array  $wordPool
+     * @param array $wordPool
      */
-    public static function mostSimilar($needle, $wordPool)
-    {
+    public static function mostSimilar($needle, $wordPool) {
         $distancePool = [];
 
         $needle = mb_strtolower($needle);
@@ -47,8 +49,7 @@ class StringUtils
         return $distancePool[$min][0];
     }
 
-    public static function plainPhone($area, $extension)
-    {
+    public static function plainPhone($area, $extension) {
         if ($area == null) {
             $area = "";
         }
@@ -56,7 +57,7 @@ class StringUtils
             $extension = "";
         }
 
-        $phoneNumber = trim($area).trim($extension);
+        $phoneNumber = trim($area) . trim($extension);
 
         if ($phoneNumber == "") {
             return null;
@@ -77,32 +78,28 @@ class StringUtils
      *
      * @param $digits
      */
-    public static function normalizePhone($digits)
-    {
+    public static function normalizePhone($digits) {
         $chunks = str_split($digits, 3);
 
-        $result['npa']   = $chunks[0];
-        $result['nxx']   = $chunks[1];
-        $result['num']   = $chunks[2].$chunks[3];
-        $result['seven'] = $chunks[1].'-'.$chunks[2].$chunks[3];
-        $result['plainseven'] = $chunks[1].$chunks[2].$chunks[3];
-        $result['full']  = $chunks[0].'-'.$result['seven'];
+        $result['npa'] = $chunks[0];
+        $result['nxx'] = $chunks[1];
+        $result['num'] = $chunks[2] . $chunks[3];
+        $result['seven'] = $chunks[1] . '-' . $chunks[2] . $chunks[3];
+        $result['plainseven'] = $chunks[1] . $chunks[2] . $chunks[3];
+        $result['full'] = $chunks[0] . '-' . $result['seven'];
 
         return $result;
     }
 
-    public static function startsWith($haystack, $needle)
-    {
+    public static function startsWith($haystack, $needle) {
         return !strncmp($haystack, $needle, strlen($needle));
     }
 
-    public static function endsWith($haystack, $needle)
-    {
+    public static function endsWith($haystack, $needle) {
         return substr($haystack, -strlen($needle)) == $needle;
     }
 
-    public static function contains($haystack, $needle)
-    {
+    public static function contains($haystack, $needle) {
         if (strpos($haystack, $needle) !== false) {
             return true;
         }
@@ -110,8 +107,7 @@ class StringUtils
         return false;
     }
 
-    public static function shorten($string, $max = 255)
-    {
+    public static function shorten($string, $max = 255) {
         $string = trim($string);
 
         return (mb_strlen($string) > $max) ? mb_strimwidth($string, 0, $max - 3, '...') : $string;
@@ -120,22 +116,21 @@ class StringUtils
     /**
      * Transliterates an UTF8 string to printable ASCII characters.
      *
-     * @param  string  $string    The string to transliterate.
-     * @param  string  $substChar The character to use for characters which
+     * @param string $string The string to transliterate.
+     * @param string $substChar The character to use for characters which
      *                            cannot be transliterated.
-     * @param  boolean $trim      Whether to trim any subst characters from
+     * @param boolean $trim Whether to trim any subst characters from
      *                            beginning and end of string.
-     * @param  boolean $removeDuplicates Whether to remove duplicate subst chars
+     * @param boolean $removeDuplicates Whether to remove duplicate subst chars
      *                                   with only one.
      *
      * @return string  The transliterated string.
      */
-    public static function translit($string, $substChar = '?', $trim = true, $removeDuplicates = true)
-    {
+    public static function translit($string, $substChar = '?', $trim = true, $removeDuplicates = true) {
         // Cast scalars to strings, if non-scalar is given throw an exception
         if (!is_string($string)) {
             if (is_scalar($string)) {
-                $string = (string) $string;
+                $string = (string)$string;
             } else {
                 $type = gettype($string);
                 throw new \InvalidArgumentException(__METHOD__ . "() expects parameter 1 to be string, $type given");
@@ -165,15 +160,12 @@ class StringUtils
      * Converts the given string into a string consisting only of lowecase
      * ASCII characters and dashes (-). Used for constructing URLs.
      *
-     * @param  string $string String to convert.
-     *
+     * @param string $string String to convert.
      * @return string         Slugified string.
-     *
      * @throws InvalidArgumentException If given argument is not a string or is
      *         empty.
      */
-    public static function slugify($string)
-    {
+    public static function slugify($string) {
         if (!is_string($string)) {
             $type = gettype($string);
             throw new \InvalidArgumentException("Given argument is a $type, expected string.");
@@ -208,11 +200,10 @@ class StringUtils
     /**
      * Removes line breaks and recurring whitespace from a string.
      *
-     * @param  string $string
+     * @param string $string
      * @return string
      */
-    public static function oneLiner($string)
-    {
+    public static function oneLiner($string) {
         return preg_replace('/\\s+/', ' ', $string);
     }
 
@@ -224,13 +215,12 @@ class StringUtils
      * @see http://unicode.org/reports/tr36/#Deletion_of_Noncharacters
      * @see http://www.fileformat.info/info/unicode/char/fffd/index.htm
      *
-     * @param  string $string      Input string.
-     * @param  string $replacement Replacement character.
+     * @param string $string Input string.
+     * @param string $replacement Replacement character.
      *
      * @return string Input string with replaced 4-byte characters.
      */
-    public static function replaceNonBmp($string, $replacement = "\xEF\xBF\xBD")
-    {
+    public static function replaceNonBmp($string, $replacement = "\xEF\xBF\xBD") {
         $replaced = preg_replace('/[\\x{10000}-\\x{10FFFF}]/u', $replacement, $string);
 
         $error = preg_last_error();

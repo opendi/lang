@@ -14,6 +14,7 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
+
 namespace Opendi\Lang\Tests;
 
 use Exception;
@@ -23,8 +24,7 @@ use PHPUnit\Framework\TestCase;
 
 class StringUtilsTest extends TestCase
 {
-    public function testMostSimilar()
-    {
+    public function testMostSimilar() {
         $pool = [
             'New York',
             'New Hampshire',
@@ -43,24 +43,21 @@ class StringUtilsTest extends TestCase
         $this->assertEquals('Baltimore', StringUtils::mostSimilar('bostimore', $pool));
     }
 
-    public function testStartsWith()
-    {
+    public function testStartsWith() {
         $this->assertTrue(StringUtils::startsWith('12356566', '123'));
         $this->assertFalse(StringUtils::startsWith('1212356566', '123'));
         $this->assertFalse(StringUtils::startsWith('# 212356566', '123'));
         $this->assertFalse(StringUtils::startsWith(' 12356566', '123'));
     }
 
-    public function testEndsWith()
-    {
+    public function testEndsWith() {
         $this->assertTrue(StringUtils::endsWith('12356566123', '123'));
         $this->assertFalse(StringUtils::endsWith('121235656623', '123'));
         $this->assertFalse(StringUtils::endsWith('# 21235656612', '123'));
         $this->assertFalse(StringUtils::endsWith(' 1235656613', '123'));
     }
 
-    public function testContains()
-    {
+    public function testContains() {
         $this->assertTrue(StringUtils::contains('12356566', '123'));
         $this->assertTrue(StringUtils::contains('11a12356566', '123'));
         $this->assertTrue(StringUtils::contains('aaa123', '123'));
@@ -70,8 +67,7 @@ class StringUtilsTest extends TestCase
         $this->assertFalse(StringUtils::contains(' 1255351652663', '123'));
     }
 
-    public function testNormalizePhone()
-    {
+    public function testNormalizePhone() {
         $phone = StringUtils::normalizePhone('1234567890');
 
         $this->assertEquals('123', $phone['npa']);
@@ -82,8 +78,7 @@ class StringUtilsTest extends TestCase
         $this->assertEquals('123-456-7890', $phone['full']);
     }
 
-    public function testPlainPhone()
-    {
+    public function testPlainPhone() {
         $this->assertEquals('1234537890', StringUtils::plainPhone('123', '453-7890'));
         $this->assertEquals('1234537890', StringUtils::plainPhone('123 ', ' 4537890'));
         $this->assertEquals('1234537890', StringUtils::plainPhone('123', '453 7890'));
@@ -91,30 +86,26 @@ class StringUtilsTest extends TestCase
         $this->assertEquals('1234537890', StringUtils::plainPhone(' 123', ' 453-7890'));
     }
 
-    public function testSlugify()
-    {
+    public function testSlugify() {
         $this->assertSame('aeoeue-aeoeue-umlauts', StringUtils::slugify('äöü ÄÖÜ Umlauts'));
         $this->assertSame('multiple-weird-characters', StringUtils::slugify('  Multiple-/-\\-- Weird -{}- Characters !"#$%&/(()=??*'));
         $this->assertSame('some-croatian-scczsccz', StringUtils::slugify('Some Croatian: ščćžŠČĆŽ'));
         $this->assertSame('numbers-1234567890', StringUtils::slugify('Numbers: 1234567890'));
     }
 
-    public function testSlugifyNotString()
-    {
+    public function testSlugifyNotString() {
         $this->expectExceptionMessage("Given argument is a array, expected string.");
         $this->expectException(InvalidArgumentException::class);
         StringUtils::slugify([]);
     }
 
-    public function testSlugifyEmptyString()
-    {
+    public function testSlugifyEmptyString() {
         $this->expectExceptionMessage("Cannot slugify an empty string.");
         $this->expectException(InvalidArgumentException::class);
         StringUtils::slugify('');
     }
 
-    public function testTranslit()
-    {
+    public function testTranslit() {
         $this->assertSame('aeoeue?AeOeUe?Umlauts', StringUtils::translit('äöü ÄÖÜ Umlauts'));
         $this->assertSame('aeoeue AeOeUe Umlauts', StringUtils::translit('äöü ÄÖÜ Umlauts', ' '));
         $this->assertSame('aeoeueAeOeUeUmlauts', StringUtils::translit('äöü ÄÖÜ Umlauts', ''));
@@ -136,23 +127,20 @@ class StringUtilsTest extends TestCase
         $this->assertSame('1', StringUtils::translit(true)); // boolean
     }
 
-    public function testTranslitException()
-    {
+    public function testTranslitException() {
         $this->expectExceptionMessage("StringUtils::translit() expects parameter 1 to be string, array given");
         $this->expectException(InvalidArgumentException::class);
         StringUtils::translit([]);
     }
 
-    public function testReplaceNonBmp()
-    {
+    public function testReplaceNonBmp() {
         $text = "Here is a smiley face: \xF0\x9F\x98\x8A";
         $expected = "Here is a smiley face: \xEF\xBF\xBD";
         $actual = StringUtils::replaceNonBmp($text);
         $this->assertSame($expected, $actual);
     }
 
-    public function testReplaceNonBmpError()
-    {
+    public function testReplaceNonBmpError() {
         $this->expectExceptionMessage("Failed replacing non-BMP characters from string. Error code: 4");
         $this->expectException(Exception::class);
         $text = "Here is an invalid unicode sequence: \xF0\x28\x8C\xBC";

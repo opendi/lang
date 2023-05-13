@@ -14,7 +14,10 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
+
 namespace Opendi\Lang;
+
+use Exception;
 
 /**
  * Helper class for encoding and decoding JSON.
@@ -26,13 +29,12 @@ class Json
      *
      * @see http://php.net/manual/en/function.json-encode.php
      */
-    public static function encode()
-    {
+    public static function encode() {
         $return = call_user_func_array('json_encode', func_get_args());
 
         $error = self::getLastError();
         if ($error !== null) {
-            throw new \Exception("Failed encoding JSON: $error");
+            throw new Exception("Failed encoding JSON: $error");
         }
 
         return $return;
@@ -43,13 +45,12 @@ class Json
      *
      * @see http://php.net/manual/en/function.json-decode.php
      */
-    public static function decode()
-    {
+    public static function decode() {
         $return = call_user_func_array('json_decode', func_get_args());
 
         $error = self::getLastError();
         if ($error !== null) {
-            throw new \Exception("Failed decoding JSON: $error");
+            throw new Exception("Failed decoding JSON: $error");
         }
 
         return $return;
@@ -58,22 +59,21 @@ class Json
     /**
      * Loads and decodes JSON data from a file.
      *
-     * @param  string  $path Path to the JSON file.
-     * @param  boolean $assoc   If true, will return an array instead of an
+     * @param string $path Path to the JSON file.
+     * @param boolean $assoc If true, will return an array instead of an
      *                          object.
-     * @param  integer $depth   User specified recursion depth.
-     * @param  integer $options Bitmask of JSON decode options.
+     * @param integer $depth User specified recursion depth.
+     * @param integer $options Bitmask of JSON decode options.
      *
      * @return mixed        Decoded json data.
      *
-     * @throws \Exception If decoding JSON data or reading the file fails.
+     * @throws Exception If decoding JSON data or reading the file fails.
      */
-    public static function load($path, $assoc = false, $depth = 512, $options = 0)
-    {
+    public static function load($path, $assoc = false, $depth = 512, $options = 0) {
         $json = file_get_contents($path);
         if ($json === false) {
             $error = error_get_last();
-            throw new \Exception("Failed reading JSON data from file: " . $error['message']);
+            throw new Exception("Failed reading JSON data from file: " . $error['message']);
         }
 
         return self::decode($json, $assoc, $depth, $options);
@@ -82,23 +82,22 @@ class Json
     /**
      * Encodes data to JSON and saves it to a file.
      *
-     * @param  mixed   $data    Data to encode.
-     * @param  string  $path    Path to the target file.
-     * @param  integer $options Options for json_encode.
-     * @param  integer $depth   The maximum depth.
+     * @param mixed $data Data to encode.
+     * @param string $path Path to the target file.
+     * @param integer $options Options for json_encode.
+     * @param integer $depth The maximum depth.
      *
      * @return integer          Number of bytes that were written to the file.
      *
-     * @throws \Exception If encoding data to JSON or writing the file fails.
+     * @throws Exception If encoding data to JSON or writing the file fails.
      */
-    public static function dump($data, $path, $options = 0, $depth = 512)
-    {
+    public static function dump($data, $path, $options = 0, $depth = 512) {
         $json = self::encode($data, $options, $depth);
 
         $result = file_put_contents($path, $json);
         if ($result === false) {
             $error = error_get_last();
-            throw new \Exception("Failed writing JSON data to file: " . $error['message']);
+            throw new Exception("Failed writing JSON data to file: " . $error['message']);
         }
 
         return $result;
@@ -109,8 +108,7 @@ class Json
      *
      * @return string
      */
-    private static function getLastError()
-    {
+    private static function getLastError() {
         $errorCode = json_last_error();
 
         if ($errorCode === JSON_ERROR_NONE) {

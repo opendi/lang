@@ -14,6 +14,7 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
+
 namespace Opendi\Lang\Tests\Geo;
 
 use Opendi\Lang\Geo\GeoCalculator;
@@ -21,8 +22,7 @@ use PHPUnit\Framework\TestCase;
 
 class GeoCalculatorTest extends TestCase
 {
-    public function testCalcuations()
-    {
+    public function testCalcuations() {
         $calculator = new GeoCalculator(19.045148, -155.627424);
 
         $this->assertEquals(19045148, $calculator->latInt());

@@ -38,13 +38,12 @@ class JsonWriter
      * integer keys, and a JSON object for string keys. This can be forced
      * by setting one of FLAG_AS_ARRAY or FLAG_AS_OBJECT in $flags.
      *
-     * @param  string   $path      Path to the file to write.
-     * @param  Iterator $data      An iterator or generator yielding the data.
-     * @param  numeric  $threshold Max. file size in bytes (null for no limit).
-     * @param  integer  $flags     Additional options, see FLAG_* constants.
+     * @param string $path Path to the file to write.
+     * @param Iterator $data An iterator or generator yielding the data.
+     * @param numeric $threshold Max. file size in bytes (null for no limit).
+     * @param integer $flags Additional options, see FLAG_* constants.
      */
-    public function write($path, Iterator $data, $threshold = null, $flags = 0)
-    {
+    public function write($path, Iterator $data, $threshold = null, $flags = 0) {
         $asObject = $this->isAsObject($data, $flags);
         $pretty = $flags & self::FLAG_PRETTY_PRINT;
         $jsonFlags = $pretty ? JSON_PRETTY_PRINT : 0;
@@ -54,7 +53,7 @@ class JsonWriter
 
         $file = $this->open($path, $asObject, $pretty, $ord);
 
-        while($data->valid()) {
+        while ($data->valid()) {
             if ($pretty) {
                 $file->fwrite("\t");
             }
@@ -90,9 +89,8 @@ class JsonWriter
         $this->close($file, $asObject, $pretty);
     }
 
-    protected function isAsObject(Iterator $data, $flags)
-    {
-        if ($flags & self::FLAG_AS_OBJECT  && $flags & self::FLAG_AS_ARRAY) {
+    protected function isAsObject(Iterator $data, $flags) {
+        if ($flags & self::FLAG_AS_OBJECT && $flags & self::FLAG_AS_ARRAY) {
             throw new \Exception("It's not allowed to set both FLAG_AS_OBJECT and FLAG_AS_ARRAY.");
         }
 
@@ -109,8 +107,7 @@ class JsonWriter
         return !is_int($data->key());
     }
 
-    protected function shouldRollover($file, $threshold)
-    {
+    protected function shouldRollover($file, $threshold) {
         if (isset($threshold)) {
             clearstatcache();
             return $file->getSize() > $threshold;
@@ -119,8 +116,7 @@ class JsonWriter
         return false;
     }
 
-    protected function open($path, $asObject, $pretty, $ord = null)
-    {
+    protected function open($path, $asObject, $pretty, $ord = null) {
         if (isset($ord)) {
             $parts = pathinfo($path);
             $ord = str_pad($ord, 5, '0', STR_PAD_LEFT);
@@ -142,8 +138,7 @@ class JsonWriter
         return $file;
     }
 
-    protected function close(SplFileObject $file, $asObject, $pretty)
-    {
+    protected function close(SplFileObject $file, $asObject, $pretty) {
         if ($pretty) {
             $file->fwrite("\n");
         }
@@ -151,8 +146,7 @@ class JsonWriter
         $file->fwrite($asObject ? '}' : ']');
     }
 
-    protected function rollover(SplFileObject $file, $asObject, $path, $pretty, $ord)
-    {
+    protected function rollover(SplFileObject $file, $asObject, $path, $pretty, $ord) {
         $this->close($file, $asObject, $pretty);
 
         return $this->open($path, $asObject, $pretty, $ord);

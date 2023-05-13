@@ -14,6 +14,7 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
+
 namespace Opendi\Lang\Tests;
 
 use Exception;
@@ -22,8 +23,7 @@ use PHPUnit\Framework\TestCase;
 
 class JsonTest extends TestCase
 {
-    public function testDecode()
-    {
+    public function testDecode() {
         $data = '{ "foo": 1, "bar": { "baz": "xxx" } }';
 
         $actual = Json::decode($data);
@@ -35,8 +35,7 @@ class JsonTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testDecodeWithOptions()
-    {
+    public function testDecodeWithOptions() {
         $data = '{ "foo": 1, "bar": { "baz": "xxx" } }';
 
         $actual = Json::decode($data, true);
@@ -48,16 +47,14 @@ class JsonTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testDecodeError()
-    {
+    public function testDecodeError() {
         $this->expectExceptionMessage("Failed decoding JSON");
         $this->expectException(Exception::class);
         // Invalid JSON
         Json::decode('xxx');
     }
 
-    public function testEncode()
-    {
+    public function testEncode() {
         $data = [
             'foo' => 1,
             'bar' => [
@@ -74,8 +71,7 @@ class JsonTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testEncodeWithOptions()
-    {
+    public function testEncodeWithOptions() {
         $data = [
             'foo' => 1,
             'bar' => [
@@ -92,16 +88,14 @@ class JsonTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testEncodeError()
-    {
+    public function testEncodeError() {
         $this->expectExceptionMessage("Failed encoding JSON");
         $this->expectException(Exception::class);
         // Unencodable stuff
         Json::encode(INF);
     }
 
-    public function testDumpAndLoad()
-    {
+    public function testDumpAndLoad() {
         $filename = __DIR__ . '/../var/' . uniqid() . ".json";
         $testData = $testData = [
             'foo' => 1,
@@ -116,7 +110,7 @@ class JsonTest extends TestCase
         $this->assertTrue(file_exists($filename));
 
         $expected1 = $testData;
-        $expected2 = (object) $testData;
+        $expected2 = (object)$testData;
 
         $actual1 = Json::load($filename, true);
         $actual2 = Json::load($filename, false);
@@ -128,15 +122,13 @@ class JsonTest extends TestCase
         unlink($filename);
     }
 
-    public function testLoadError()
-    {
+    public function testLoadError() {
         $this->expectExceptionMessage("Failed reading JSON data from file");
         $this->expectException(Exception::class);
         @Json::load('this_file_does_not_exist.json');
     }
 
-    public function testDumpError()
-    {
+    public function testDumpError() {
         $this->expectExceptionMessage("Failed writing JSON data to file");
         $this->expectException(Exception::class);
         @Json::dump("", __DIR__ . '/../var/does_not_exist/foo.json');

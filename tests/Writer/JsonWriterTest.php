@@ -14,6 +14,7 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
+
 namespace Opendi\Lang\Tests\Writer;
 
 use Opendi\Lang\Writer\JsonWriter;
@@ -27,8 +28,7 @@ class JsonWriterTest extends TestCase
         'baz' => ['bar3' => 'baz3'],
     ];
 
-    public function testSimple()
-    {
+    public function testSimple() {
         $path = $this->getTestPath();
 
         $iterator = new \ArrayIterator($this->testData);
@@ -43,8 +43,7 @@ class JsonWriterTest extends TestCase
         unlink($path);
     }
 
-    public function testPretty()
-    {
+    public function testPretty() {
         $path = $this->getTestPath();
 
         $iterator = new \ArrayIterator($this->testData);
@@ -58,8 +57,7 @@ class JsonWriterTest extends TestCase
         unlink($path);
     }
 
-    public function testRollover()
-    {
+    public function testRollover() {
         $path = $this->getTestPath();
 
         $iterator = new \ArrayIterator($this->testData);
@@ -84,8 +82,7 @@ class JsonWriterTest extends TestCase
         unlink("$path.00003");
     }
 
-    private function getTestPath()
-    {
+    private function getTestPath() {
         return sys_get_temp_dir() . '/' . uniqid('lang');
     }
 }

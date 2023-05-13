@@ -14,6 +14,7 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
+
 namespace Opendi\Lang\Object;
 
 use Closure;
@@ -21,8 +22,7 @@ use InvalidArgumentException;
 
 trait CloneProperties
 {
-    public static function fromJson($json)
-    {
+    public static function fromJson($json) {
         return static::fromObject(json_decode($json));
     }
 
@@ -31,11 +31,10 @@ trait CloneProperties
      * matching array keys
      *
      * @param $array
-     * @throws InvalidArgumentException
      * @return static
+     * @throws InvalidArgumentException
      */
-    public static function fromArray($array)
-    {
+    public static function fromArray($array) {
         if (!is_array($array)) {
             throw new InvalidArgumentException("Expected array, got " . gettype($array));
         }
@@ -60,11 +59,10 @@ trait CloneProperties
      *
      * @param $object
      * @param Closure $before
-     * @throws InvalidArgumentException
      * @return static
+     * @throws InvalidArgumentException
      */
-    public static function fromObject($object, $before = null)
-    {
+    public static function fromObject($object, $before = null) {
         if (!is_object($object)) {
             throw new InvalidArgumentException("Expected object, got " . gettype($object));
         }

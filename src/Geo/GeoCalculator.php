@@ -14,6 +14,7 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
+
 namespace Opendi\Lang\Geo;
 
 class GeoCalculator
@@ -21,34 +22,28 @@ class GeoCalculator
     private $longitude;
     private $latitude;
 
-    public function __construct($latitude, $longitude)
-    {
+    public function __construct($latitude, $longitude) {
         $this->longitude = $longitude;
         $this->latitude = $latitude;
     }
 
-    public function latInt()
-    {
-        return intval(round(($this->latitude * 1e6 ), 0));
+    public function latInt() {
+        return intval(round(($this->latitude * 1e6), 0));
     }
 
-    public function latSinRad()
-    {
+    public function latSinRad() {
         return sin(deg2rad($this->latitude));
     }
 
-    public function latCosRad()
-    {
+    public function latCosRad() {
         return cos(deg2rad($this->latitude));
     }
 
-    public function longInt()
-    {
+    public function longInt() {
         return intval(round(($this->longitude * 1e6), 0));
     }
 
-    public function longRad()
-    {
-        return  deg2rad($this->longitude);
+    public function longRad() {
+        return deg2rad($this->longitude);
     }
 }

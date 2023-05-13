@@ -14,6 +14,7 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
+
 namespace Opendi\Lang;
 
 use Exception;
@@ -28,14 +29,13 @@ class ArrayUtils
     /**
      * Flattens a deep array to a single dimension.
      *
-     * @param array  $array      Array to flatten.
-     * @param string $separator  Separator used to divide key values.
-     * @param string $prefix     Initial key prefix. Empty by default.
+     * @param array $array Array to flatten.
+     * @param string $separator Separator used to divide key values.
+     * @param string $prefix Initial key prefix. Empty by default.
      *
      * @throws InvalidArgumentException if a non-array value is given
      */
-    public static function flatten(array $array, $separator = '.', $prefix = '')
-    {
+    public static function flatten(array $array, $separator = '.', $prefix = '') {
         $result = [];
 
         foreach ($array as $key => $value) {
@@ -68,16 +68,15 @@ class ArrayUtils
      *                                     (default) duplicate key will raise an
      *                                     exception.
      *
-     * @throws Exception If a duplicate key is encountered and
-     *                   $overwriteDuplicates is set to false (default).
+     * @return array The reindexed array
      * @throws Exception If a key which is not string or integer is encountered
      * @throws Exception If the defined path does not exist in any element of
      *                   the array.
      *
-     * @return array The reindexed array
+     * @throws Exception If a duplicate key is encountered and
+     *                   $overwriteDuplicates is set to false (default).
      */
-    public static function reindex($array, $path, $overwriteDuplicates = false)
-    {
+    public static function reindex($array, $path, $overwriteDuplicates = false) {
         $path = self::processReindexPath($path);
 
         $newArray = [];
@@ -112,8 +111,7 @@ class ArrayUtils
     }
 
     /** Processes and validates the given index path. */
-    private static function processReindexPath($path)
-    {
+    private static function processReindexPath($path) {
         if (is_string($path) || is_integer($path)) {
             // Single level path - one element only
             $path = array(array($path));
@@ -165,20 +163,19 @@ class ArrayUtils
      * Given path array("foo", "bar") the function will return 1.
      * Given path array("baz"), or just "baz", the function will return 2.
      *
-     * @throws InvalidArgumentException if $array is not an array
-     * @throws InvalidArgumentException if $path if the given path is not found
-     * in the array. For example, using the path array('foo', 'baz') in the
-     * previous example.
-     *
      * @param array $array the array to look in
      * @param mixed $path array key, or an array of keys representing the path
      * to the element to fetch in the array
      * @return the element
+     * @throws InvalidArgumentException if $path if the given path is not found
+     * in the array. For example, using the path array('foo', 'baz') in the
+     * previous example.
+     *
+     * @throws InvalidArgumentException if $array is not an array
      */
-    public static function fetchInnerElement($array, $path)
-    {
+    public static function fetchInnerElement($array, $path) {
         if (is_object($array)) {
-            $array = (array) $array;
+            $array = (array)$array;
         }
 
         if (!is_array($array)) {

@@ -27,8 +27,7 @@ class CPManipulate
 
 class ClonePropertiesTest extends TestCase
 {
-    public function testFromArray()
-    {
+    public function testFromArray() {
         $array = [
             'foo' => 1231
         ];
@@ -36,11 +35,10 @@ class ClonePropertiesTest extends TestCase
         $user = CPUser::fromArray($array);
 
         $this->assertInstanceOf(CPUser::class, $user);
-        $this->assertEquals($array, (array) $user);
+        $this->assertEquals($array, (array)$user);
     }
 
-    public function testFromArrayChild()
-    {
+    public function testFromArrayChild() {
         $array = [
             'foo' => 3231,
             'bar' => 5472,
@@ -49,23 +47,20 @@ class ClonePropertiesTest extends TestCase
         $user = CPUserChild::fromArray($array);
 
         $this->assertInstanceOf(CPUserChild::class, $user);
-        $this->assertEquals($array, (array) $user);
+        $this->assertEquals($array, (array)$user);
     }
 
-    public function testFromArrayException()
-    {
+    public function testFromArrayException() {
         $this->expectException(\InvalidArgumentException::class);
         CPUser::fromArray(null);
     }
 
-    public function testFromArrayEmpty()
-    {
+    public function testFromArrayEmpty() {
         $user = CPUser::fromArray([]);
         $this->assertInstanceOf(CPUser::class, $user);
     }
 
-    public function testFromObject()
-    {
+    public function testFromObject() {
         $object = new \stdClass();
         $object->foo = 123;
 
@@ -75,12 +70,11 @@ class ClonePropertiesTest extends TestCase
         $this->assertEquals($object->foo, $user->foo);
     }
 
-    public function testFromObjectWithBefore()
-    {
+    public function testFromObjectWithBefore() {
         $object = new \stdClass();
         $object->foo = 123;
 
-        $user = CPManipulate::fromObject($object, function($model) {
+        $user = CPManipulate::fromObject($object, function ($model) {
             $model->bar = 'bar';
         });
 
@@ -89,8 +83,7 @@ class ClonePropertiesTest extends TestCase
         $this->assertEquals($user->bar, 'bar');
     }
 
-    public function testFromObjectChild()
-    {
+    public function testFromObjectChild() {
         $object = new \stdClass();
         $object->foo = 123;
         $object->bar = 321;
@@ -102,14 +95,12 @@ class ClonePropertiesTest extends TestCase
         $this->assertEquals($object->bar, $user->bar);
     }
 
-    public function testFromObjectException()
-    {
+    public function testFromObjectException() {
         $this->expectException(\InvalidArgumentException::class);
         CPUser::fromObject([]);
     }
 
-    public function testFromObjectEmpty()
-    {
+    public function testFromObjectEmpty() {
         $user = CPUser::fromObject(new \stdClass());
         $this->assertInstanceOf(CPUser::class, $user);
     }

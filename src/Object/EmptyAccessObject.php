@@ -14,6 +14,7 @@
  *  either express or implied. See the License for the specific
  *  language governing permissions and limitations under the License.
  */
+
 namespace Opendi\Lang\Object;
 
 class EmptyAccessObject
@@ -22,12 +23,10 @@ class EmptyAccessObject
 
     private static $instance;
 
-    private function __construct()
-    {
+    private function __construct() {
     }
 
-    public static function getInstance()
-    {
+    public static function getInstance() {
         if (self::$instance == null) {
             self::$instance = new EmptyAccessObject();
         }
@@ -35,8 +34,7 @@ class EmptyAccessObject
         return self::$instance;
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         return '';
     }
 }
